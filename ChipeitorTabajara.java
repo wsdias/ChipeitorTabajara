@@ -24,9 +24,9 @@ public class ChipeitorTabajara{
 		if (args.length == 1){
 			
 			Carregar(args[0]);
-			//ImprimirPlaca();
-			//for (Conexao c : conexoes)
-			//	System.out.println(c.getOrigem() + " --> " + c.getDestino());
+			ImprimirPlaca();
+			for (Conexao c : conexoes)
+				System.out.println(c.getOrigem() + " --> " + c.getDestino());
 			//BuscarSolucao();
 		}
 		else System.out.println("Formato: java ChipeitorTabajara arquivoEntrada");
@@ -85,7 +85,6 @@ public class ChipeitorTabajara{
 		BufferedReader buffer;
         FileReader arquivo;
         String[] linha;
-        String aux, oldAux;
 
         try{
 
@@ -101,19 +100,9 @@ public class ChipeitorTabajara{
 			
 			for (i = 0; i < n; i++){
 				
-                aux = buffer.readLine().trim();
-                String regex = "          ";
-                for (j = 0; j < 4; j++){
-
-                    aux = aux.replace(regex, " ");
-                    char[] x = aux.toCharArray();
-                    regex = String.valueOf();
-                }
-
-                System.out.println(aux);
-                //linha = aux.split(" ");
-				//for (j = 0; j < n; j++)
-				//	placa[i][j] = Integer.valueOf(linha[j]);
+                linha = buffer.readLine().trim().split("\\s+");
+				for (j = 0; j < n; j++)
+					placa[i][j] = Integer.valueOf(linha[j]);
 			}
 			
             for (i = 0; i < nConexoes; i++){
