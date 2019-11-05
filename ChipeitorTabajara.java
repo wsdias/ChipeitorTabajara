@@ -16,7 +16,7 @@ import java.lang.Math;
 public class ChipeitorTabajara{
 
 	private static int[][] placa;
-	private static ArrayList<Conexao> conexoes;
+	private static ArrayList<Tupla> conexoes;
 	private static int n, nConexoes;
 
 	public static void main(String[] args){
@@ -24,10 +24,8 @@ public class ChipeitorTabajara{
 		if (args.length == 1){
 			
 			Carregar(args[0]);
-			ImprimirPlaca();
-			for (Conexao c : conexoes)
-				System.out.println(c.getOrigem() + " --> " + c.getDestino());
-			//BuscarSolucao();
+			Imprimir();
+    		BuscarSolucao();
 		}
 		else System.out.println("Formato: java ChipeitorTabajara arquivoEntrada");
 	}
@@ -37,11 +35,12 @@ public class ChipeitorTabajara{
 		boolean continuar;
 		int comprimento;
 		
-		continuar = !true;
+		/*continuar = !true;
 		while (continuar){
 			
 			
-		}
+		}*/
+        System.out.printf("%.4f\n", SomarDistancias());
 	}
 	
 	private static boolean Avaliar(){
@@ -57,34 +56,58 @@ public class ChipeitorTabajara{
 		placa[pos1x][pos1y] = placa[pos2x][pos2y];
 		placa[pos2x][pos2y] = aux;
 	}
-	
-	private static double SomaDistancias(){
-		
+
+	private static double SomarDistancias(){
+
 		double resultado;
+        int a, b;
 		
 		resultado = 0.0;
-		/*for (Conexao c : conexoes){
-			
-			resultado += 
-		}*/
+		for (Tupla t : conexoes){
+
+            a = t.a();
+            b = t.b();
+			resultado += CalcularDistancia(BuscarComponente(a), BuscarComponente(b));
+		}
 		
 		return resultado;
 	}
+
+    private static Tupla BuscarComponente(int componente){
+
+        int i, j;
+
+        for (i = 0; i < n; i++){
+
+            for (j = 0; j < n; j++){
+
+                if (placa[i][j] == componente)
+                    return new Tupla(i, j);
+            }
+        }
+
+        return null;
+    }
 	
-	private static double CalcularDistancia(int l1, int c1, int l2, int c2){
+	private static double CalcularDistancia(Tupla a, Tupla b){
 		
 		double resultado;
+        int l1, c1, l2, c2;
+
+        l1 = a.a(); c1 = a.b();
+        l2 = b.a(); c2 = b.b();
 		
-		resultado = Math.sqrt(Math.pow(l2 - l1, 2) + Math.pow(c2 - c1, 2));		
+		resultado = Math.sqrt(Math.pow(l2 - l1, 2) + Math.pow(c2 - c1, 2));
+        System.out.println("RESULTADO_EUCLIDIANA: " + resultado);
 		return resultado;
 	}
 	
 	private static void Carregar(String nomeArquivo){
 		
-		int i, j, origem, destino;
 		BufferedReader buffer;
         FileReader arquivo;
         String[] linha;
+		int i, j, a, b;
 
         try{
 
@@ -96,7 +119,7 @@ public class ChipeitorTabajara{
 			nConexoes = Integer.valueOf(linha[1]);
 			
 			placa = new int[n][n];
-			conexoes = new ArrayList<Conexao>();
+			conexoes = new ArrayList<Tupla>();
 			
 			for (i = 0; i < n; i++){
 				
@@ -108,9 +131,9 @@ public class ChipeitorTabajara{
             for (i = 0; i < nConexoes; i++){
 
                 linha = buffer.readLine().split(" ");
-				origem = Integer.valueOf(linha[0]);
-				destino = Integer.valueOf(linha[1]);
-				conexoes.add(new Conexao(origem, destino));
+				a = Integer.valueOf(linha[0]);
+				b = Integer.valueOf(linha[1]);
+				conexoes.add(new Tupla(a, b));
             }
 			
             arquivo.close ();
@@ -126,7 +149,7 @@ public class ChipeitorTabajara{
 		
 	}
 	
-	private static void ImprimirPlaca(){
+	private static void Imprimir(){
 		
 		int i, j;
 		
@@ -136,24 +159,30 @@ public class ChipeitorTabajara{
 				System.out.print(placa[i][j] + " ");
 			System.out.println();
 		}
+
+		for (Tupla t : conexoes)
+			System.out.println(t.a() + " --> " + t.b());
 	}
 }
 
-class Conexao{
-	
-	int origem, destino;
-	
-	public Conexao(int origem, int destino){
-		
-		this.origem = origem;
-		this.destino = destino;
-	}
-	
-	public int getOrigem(){
-		return origem;
-	}
-	
-	public int getDestino(){
-		return destino;
-	}
+class Tupla{
+
+    private int a;
+    private int b;
+
+    public Tupla(int a, int b){
+
+        this.a = a;
+        this.b = b;
+    }
+
+    public int a(){
+        return a;
+    }
+
+    public int b(){
+        return b;
+    }
 }
+
+
