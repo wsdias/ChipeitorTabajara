@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.Math;
 
 public class ChipeitorTabajara{
 
@@ -23,10 +24,10 @@ public class ChipeitorTabajara{
 		if (args.length == 1){
 			
 			Carregar(args[0]);
-			ImprimirPlaca();
-			for (Conexao c : conexoes)
-				System.out.println(c.getOrigem() + " --> " + c.getDestino());
-			BuscarSolucao();
+			//ImprimirPlaca();
+			//for (Conexao c : conexoes)
+			//	System.out.println(c.getOrigem() + " --> " + c.getDestino());
+			//BuscarSolucao();
 		}
 		else System.out.println("Formato: java ChipeitorTabajara arquivoEntrada");
 	}
@@ -59,10 +60,10 @@ public class ChipeitorTabajara{
 	
 	private static double SomaDistancias(){
 		
-		/*double resultado;
+		double resultado;
 		
 		resultado = 0.0;
-		for (Conexao c : conexoes){
+		/*for (Conexao c : conexoes){
 			
 			resultado += 
 		}*/
@@ -74,7 +75,7 @@ public class ChipeitorTabajara{
 		
 		double resultado;
 		
-		resultado = sqrt(Math.pow(l2 - l1, 2) + Math.pow(c2 - c1, 2));		
+		resultado = Math.sqrt(Math.pow(l2 - l1, 2) + Math.pow(c2 - c1, 2));		
 		return resultado;
 	}
 	
@@ -84,6 +85,7 @@ public class ChipeitorTabajara{
 		BufferedReader buffer;
         FileReader arquivo;
         String[] linha;
+        String aux, oldAux;
 
         try{
 
@@ -99,9 +101,19 @@ public class ChipeitorTabajara{
 			
 			for (i = 0; i < n; i++){
 				
-				linha = buffer.readLine().split(" ");
-				for (j = 0; j < n; j++)					
-					placa[i][j] = Integer.valueOf(linha[j]);
+                aux = buffer.readLine().trim();
+                String regex = "          ";
+                for (j = 0; j < 4; j++){
+
+                    aux = aux.replace(regex, " ");
+                    char[] x = aux.toCharArray();
+                    regex = String.valueOf();
+                }
+
+                System.out.println(aux);
+                //linha = aux.split(" ");
+				//for (j = 0; j < n; j++)
+				//	placa[i][j] = Integer.valueOf(linha[j]);
 			}
 			
             for (i = 0; i < nConexoes; i++){
