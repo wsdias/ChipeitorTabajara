@@ -8,6 +8,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,42 +25,70 @@ public class ChipeitorTabajara{
 		if (args.length == 1){
 			
 			Carregar(args[0]);
-			Imprimir();
+			//Imprimir();
     		BuscarSolucao();
 		}
 		else System.out.println("Formato: java ChipeitorTabajara arquivoEntrada");
 	}
+
+    // --------------------------------------------------------------------------------//
 	
 	private static void BuscarSolucao(){
-		
-		boolean continuar;
-		int comprimento;
-		
-		/*continuar = !true;
-		while (continuar){
-			
-			
-		}*/
-        System.out.printf("%.4f\n", SomarDistancias());
-	}
-	
-	private static boolean Avaliar(){
-		
-		return true;
-	}
-	
-	private static void Swap(int pos1x, int pos1y, int pos2x, int pos2y){
-		
-		int aux;
-		
-		aux = placa[pos1x][pos1y];
-		placa[pos1x][pos1y] = placa[pos2x][pos2y];
-		placa[pos2x][pos2y] = aux;
+
+        int[][] aux;
+        int a, b;
+        Tupla c1, c2;
+        Random r;
+        double res, oldRes;
+
+        r = new Random();
+        res = oldRes = SomarDistancias(placa);
+
+		while (true){
+
+            a = r.nextInt(n*n);
+            b = r.nextInt(n*n);
+
+            c1 = BuscarComponente(a, placa);
+            c2 = BuscarComponente(b, placa);
+
+            aux = placa;
+            aux = Swap(c1, c2, aux);
+            res = SomarDistancias(aux);
+
+            if (res < oldRes){
+
+                oldRes = res;
+                placa = aux;
+                System.out.printf("\n\nRES: %.4f\n\n", res);
+                Imprimir();
+            }
+            
+		}
 	}
 
-	private static double SomarDistancias(){
+    // --------------------------------------------------------------------------------//
+	
+	private static int[][] Swap(Tupla a, Tupla b, int[][] aux){
+		
+		int tmp, l1, c1, l2, c2;
+
+        l1 = a.a(); c1 = a.b();
+        l2 = b.a(); c2 = b.b();
+		
+		tmp = aux[l1][c1];
+		aux[l1][c1] = aux[l2][c2];
+		aux[l2][c2] = tmp;
+
+        return aux;
+	}
+
+    // --------------------------------------------------------------------------------//
+
+	private static double SomarDistancias(int[][] aux){
 
 		double resultado;
+        Tupla t1, t2;
         int a, b;
 		
 		resultado = 0.0;
@@ -67,13 +96,19 @@ public class ChipeitorTabajara{
 
             a = t.a();
             b = t.b();
-			resultado += CalcularDistancia(BuscarComponente(a), BuscarComponente(b));
+
+            t1 = BuscarComponente(a, aux);
+            t2 = BuscarComponente(b, aux);
+
+			resultado += CalcularDistancia(t1, t2);
 		}
 		
 		return resultado;
 	}
 
-    private static Tupla BuscarComponente(int componente){
+    // --------------------------------------------------------------------------------//
+
+    private static Tupla BuscarComponente(int componente, int[][] aux){
 
         int i, j;
 
@@ -81,13 +116,15 @@ public class ChipeitorTabajara{
 
             for (j = 0; j < n; j++){
 
-                if (placa[i][j] == componente)
+                if (aux[i][j] == componente)
                     return new Tupla(i, j);
             }
         }
 
         return null;
     }
+
+    // --------------------------------------------------------------------------------//
 	
 	private static double CalcularDistancia(Tupla a, Tupla b){
 		
@@ -98,9 +135,10 @@ public class ChipeitorTabajara{
         l2 = b.a(); c2 = b.b();
 		
 		resultado = Math.sqrt(Math.pow(l2 - l1, 2) + Math.pow(c2 - c1, 2));
-        System.out.println("RESULTADO_EUCLIDIANA: " + resultado);
 		return resultado;
 	}
+
+    // --------------------------------------------------------------------------------//
 	
 	private static void Carregar(String nomeArquivo){
 		
@@ -143,11 +181,15 @@ public class ChipeitorTabajara{
             System.err.println (e.getMessage ());
         }
 	}
+
+    // --------------------------------------------------------------------------------//
 	
 	private static void Salvar(String nomeArquivo){
 		
-		
+		// Implementar...
 	}
+
+    // --------------------------------------------------------------------------------//
 	
 	private static void Imprimir(){
 		
