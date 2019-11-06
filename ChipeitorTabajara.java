@@ -61,12 +61,12 @@ public class ChipeitorTabajara{
 	
 	private static int[][] ModificarPlaca(int[][] aux){
 
-		int a, b, op;
-		Tupla c1, c2;
+		int a, b, c, op;
+		Tupla t1, t2, t3;
 		Random r;
 
 		r = new Random();
-		op = r.nextInt(2);
+		op = r.nextInt(3);
 		
 		switch(op){
 			
@@ -77,11 +77,11 @@ public class ChipeitorTabajara{
 					b = r.nextInt(n*n);	
 				} while (a == b);
 				
-				c1 = BuscarComponente(a, placa);
-				c2 = BuscarComponente(b, placa);
+				t1 = BuscarComponente(a, placa);
+				t2 = BuscarComponente(b, placa);
 				
 				if (a == b) System.out.println("HOUVE UM ERRO INESPERADO! 0");
-				aux = Swap(c1, c2, aux);
+				aux = Swap(t1, t2, aux);
 				break;
 				
 			case 1:
@@ -94,8 +94,22 @@ public class ChipeitorTabajara{
 				aux = TrocarLinhas(a, b, aux);
 				break;
 				
+			case 2:
+				do
+				{
+					a = r.nextInt(n*n);
+					b = r.nextInt(n*n);
+					c = r.nextInt(n*n);
+				} while (!(a != b && b != c && c != a));
+				if (a == b) System.out.println("HOUVE UM ERRO INESPERADO! 2");
+				t1 = BuscarComponente(a, aux);
+				t2 = BuscarComponente(b, aux);
+				t3 = BuscarComponente(c, aux);
+				aux = SwapTriplo(t1, t2, t3, aux);
+				break;
+				
 			default:
-				//System.out.println("NAO REALIZOU OPERACAO...");
+				System.out.println("NAO DEVERIA TER CHEGADO AQUI...");
 
 		}
 		
@@ -114,6 +128,24 @@ public class ChipeitorTabajara{
 			aux[l1][i] = aux[l2][i];
 			aux[l2][i] = tmp;
 		}
+		
+		return aux;
+	}
+	
+	// --------------------------------------------------------------------------------//
+	
+	private static int[][] SwapTriplo(Tupla a, Tupla b, Tupla c, int[][] aux){
+		
+		int tmp, l1, c1, l2, c2, l3, c3;
+		
+		l1 = a.a(); c1 = a.b();
+		l2 = b.a(); c2 = b.b();
+		l3 = c.a(); c3 = c.b();
+		
+		tmp = aux[l1][c1];
+		aux[l1][c1] = aux[l2][c2];
+		aux[l2][c2] = aux[l3][c3];
+		aux[l3][c3] = tmp;
 		
 		return aux;
 	}
