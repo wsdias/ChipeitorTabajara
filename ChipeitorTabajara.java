@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.lang.Math;
 
@@ -49,21 +51,25 @@ public class ChipeitorTabajara{
             a = r.nextInt(n*n);
             b = r.nextInt(n*n);
 
-            c1 = BuscarComponente(a, placa);
-            c2 = BuscarComponente(b, placa);
+            //if (a == b) System.out.println("IGUAIS !!!");
+            if (a != b){
 
-            aux = placa;
-            aux = Swap(c1, c2, aux);
-            res = SomarDistancias(aux);
+                c1 = BuscarComponente(a, placa);
+                c2 = BuscarComponente(b, placa);
 
-            if (res < oldRes){
+                aux = placa;
+                aux = Swap(c1, c2, aux);
+                res = SomarDistancias(aux);
 
-                oldRes = res;
-                placa = aux;
-                System.out.printf("\n\nRES: %.4f\n\n", res);
-                Imprimir();
+                if (res < oldRes){
+
+                    oldRes = res;
+                    placa = aux;
+                    System.out.printf("RES: %.4f\n", res);
+                    //Imprimir();
+                    Salvar("currentState.txt");
+                }
             }
-            
 		}
 	}
 
@@ -174,7 +180,8 @@ public class ChipeitorTabajara{
 				conexoes.add(new Tupla(a, b));
             }
 			
-            arquivo.close ();
+            buffer.close();
+            arquivo.close();
         }
         catch (IOException e){
 
@@ -186,7 +193,40 @@ public class ChipeitorTabajara{
 	
 	private static void Salvar(String nomeArquivo){
 		
-		// Implementar...
+		BufferedWriter buffer;
+        FileWriter arquivo;
+        String aux;
+        int i, j;
+
+        try{
+
+            arquivo = new FileWriter(nomeArquivo);
+            buffer = new BufferedWriter(arquivo);
+
+            aux = String.valueOf(n) + " " + String.valueOf(nConexoes) + "\n";
+            buffer.write(aux);
+
+            for (i = 0; i < n; i++){
+
+                aux = "";
+                for (j = 0; j < n; j++)
+                    aux += " " + placa[i][j];
+                buffer.write(aux + "\n");
+            }
+
+            for (Tupla t : conexoes){
+
+                aux = String.valueOf(t.a()) + " " + String.valueOf(t.b()) + "\n";
+                buffer.write(aux);
+            }
+
+            buffer.close();
+            arquivo.close();
+        }
+        catch (IOException e){
+
+            System.err.println (e.getMessage ());
+        }
 	}
 
     // --------------------------------------------------------------------------------//
