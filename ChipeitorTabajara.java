@@ -37,42 +37,87 @@ public class ChipeitorTabajara{
 	
 	private static void BuscarSolucao(){
 
+		double res, oldRes;
         int[][] aux;
-        int a, b;
-        Tupla c1, c2;
-        Random r;
-        double res, oldRes;
-
-        r = new Random();
+		
         res = oldRes = SomarDistancias(placa);
-
 		while (true){
 
-            a = r.nextInt(n*n);
-            b = r.nextInt(n*n);
+			aux = placa;
+			aux = ModificarPlaca(aux);
+			res = SomarDistancias(aux);
+			if (res < oldRes){
 
-            //if (a == b) System.out.println("IGUAIS !!!");
-            if (a != b){
-
-                c1 = BuscarComponente(a, placa);
-                c2 = BuscarComponente(b, placa);
-
-                aux = placa;
-                aux = Swap(c1, c2, aux);
-                res = SomarDistancias(aux);
-
-                if (res < oldRes){
-
-                    oldRes = res;
-                    placa = aux;
-                    System.out.printf("RES: %.4f\n", res);
-                    //Imprimir();
-                    Salvar("currentState.txt");
-                }
-            }
+				oldRes = res;
+				placa = aux;
+				System.out.printf("RES: %.4f\n", res);
+				//Imprimir();
+				Salvar("currentState.txt");
+			}
 		}
 	}
+	
+	// --------------------------------------------------------------------------------//
+	
+	private static int[][] ModificarPlaca(int[][] aux){
 
+		int a, b, op;
+		Tupla c1, c2;
+		Random r;
+
+		r = new Random();
+		op = r.nextInt(2);
+		
+		switch(op){
+			
+			case 0:
+				do
+				{
+					a = r.nextInt(n*n);
+					b = r.nextInt(n*n);	
+				} while (a == b);
+				
+				c1 = BuscarComponente(a, placa);
+				c2 = BuscarComponente(b, placa);
+				
+				if (a == b) System.out.println("HOUVE UM ERRO INESPERADO! 0");
+				aux = Swap(c1, c2, aux);
+				break;
+				
+			case 1:
+				do
+				{
+					a = r.nextInt(n);
+					b = r.nextInt(n);
+				} while (a == b);
+				if (a == b) System.out.println("HOUVE UM ERRO INESPERADO! 1");
+				aux = TrocarLinhas(a, b, aux);
+				break;
+				
+			default:
+				//System.out.println("NAO REALIZOU OPERACAO...");
+
+		}
+		
+		return aux;
+	}
+
+	// --------------------------------------------------------------------------------//
+	
+	private static int[][] TrocarLinhas(int l1, int l2, int[][] aux){
+		
+		int i, tmp;
+		
+		for (i = 0; i < n; i++){
+		
+			tmp = aux[l1][i];
+			aux[l1][i] = aux[l2][i];
+			aux[l2][i] = tmp;
+		}
+		
+		return aux;
+	}
+	
     // --------------------------------------------------------------------------------//
 	
 	private static int[][] Swap(Tupla a, Tupla b, int[][] aux){
