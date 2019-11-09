@@ -27,13 +27,12 @@ public class ChipeitorTabajara{
         if (args.length == 1){
             
             Carregar(args[0]);
-            //Imprimir();
             BuscarSolucao();
         }
         else System.out.println("Formato: java ChipeitorTabajara arquivoEntrada");
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
     
     private static void BuscarSolucao(){
 
@@ -57,7 +56,7 @@ public class ChipeitorTabajara{
         }
     }
     
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
     
     private static int[][] ModificarPlaca(int[][] aux){
 
@@ -66,7 +65,7 @@ public class ChipeitorTabajara{
         Random r;
 
         r = new Random();
-        op = r.nextInt(7);
+        op = r.nextInt(6);
         
         switch(op){
             
@@ -79,7 +78,6 @@ public class ChipeitorTabajara{
                 
                 t1 = BuscarComponente(a, placa);
                 t2 = BuscarComponente(b, placa);                
-                if (a == b) System.out.println("HOUVE UM ERRO INESPERADO! 0");
                 aux = Swap(t1, t2, aux);
                 break;
                 
@@ -91,7 +89,6 @@ public class ChipeitorTabajara{
                     c = r.nextInt(n*n);
                 } while (!(a != b && b != c && c != a));
 
-                if (a == b) System.out.println("HOUVE UM ERRO INESPERADO! 2");
                 t1 = BuscarComponente(a, aux);
                 t2 = BuscarComponente(b, aux);
                 t3 = BuscarComponente(c, aux);
@@ -105,7 +102,6 @@ public class ChipeitorTabajara{
                     b = r.nextInt(n);
                 } while (a == b);
 
-                if (a == b) System.out.println("HOUVE UM ERRO INESPERADO! 1");
                 aux = TrocarLinhas(a, b, aux);
                 break;
 
@@ -116,7 +112,6 @@ public class ChipeitorTabajara{
                     b = r.nextInt(n);
                 } while (a == b);
 
-                if (a == b) System.out.println("HOUVE UM ERRO INESPERADO! 3");
                 aux = TrocarColunas(a, b, aux);
                 break;
 
@@ -128,19 +123,14 @@ public class ChipeitorTabajara{
                 aux = FlipVertical(aux);
                 break;
 
-            case 6:
-                aux = TrocarDiagonais(aux);
-                break;
-                
             default:
-                System.out.println("NAO DEVERIA TER CHEGADO AQUI...");
-
+                System.out.println("NOP");
         }
         
         return aux;
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
 
     private static int[][] FlipHorizontal(int[][] aux){
 
@@ -164,7 +154,7 @@ public class ChipeitorTabajara{
         return aux;
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
 
     private static int[][] FlipVertical(int[][] aux){
 
@@ -188,18 +178,7 @@ public class ChipeitorTabajara{
         return aux;
     }
 
-    // --------------------------------------------------------------------------------//
-
-    private static int[][] TrocarDiagonais(int[][] aux){
-
-        int i, j, tmp;
-
-        // Implementar...
-
-        return aux;
-    }
-
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
 
     private static int[][] TrocarColunas(int c1, int c2, int[][] aux){
 
@@ -215,7 +194,7 @@ public class ChipeitorTabajara{
         return aux;
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
     
     private static int[][] TrocarLinhas(int l1, int l2, int[][] aux){
         
@@ -231,7 +210,7 @@ public class ChipeitorTabajara{
         return aux;
     }
     
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
     
     private static int[][] SwapTriplo(Tupla a, Tupla b, Tupla c, int[][] aux){
         
@@ -249,7 +228,7 @@ public class ChipeitorTabajara{
         return aux;
     }
     
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
     
     private static int[][] Swap(Tupla a, Tupla b, int[][] aux){
         
@@ -265,7 +244,7 @@ public class ChipeitorTabajara{
         return aux;
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
 
     private static double SomarDistancias(int[][] aux){
 
@@ -288,7 +267,7 @@ public class ChipeitorTabajara{
         return resultado;
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
 
     private static Tupla BuscarComponente(int componente, int[][] aux){
 
@@ -306,7 +285,7 @@ public class ChipeitorTabajara{
         return null;
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
     
     private static double CalcularDistancia(Tupla a, Tupla b){
         
@@ -320,7 +299,7 @@ public class ChipeitorTabajara{
         return resultado;
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
     
     private static void Carregar(String nomeArquivo){
         
@@ -365,7 +344,7 @@ public class ChipeitorTabajara{
         }
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
     
     private static void Salvar(String nomeArquivo){
         
@@ -405,7 +384,7 @@ public class ChipeitorTabajara{
         }
     }
 
-    // --------------------------------------------------------------------------------//
+    // -------------------------------------------------------------------------------- //
     
     private static void Imprimir(){
         
