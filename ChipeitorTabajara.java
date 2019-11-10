@@ -21,6 +21,7 @@ public class ChipeitorTabajara{
     private static int[][] placa;
     private static ArrayList<Tupla> conexoes;
     private static int n, nConexoes;
+    private static String arquivoSaida;
 
     public static void main(String[] args){
         
@@ -51,7 +52,7 @@ public class ChipeitorTabajara{
                 placa = aux;
                 System.out.printf("RES: %.4f\n", res);
                 //Imprimir();
-                Salvar("currentState.txt");
+                Salvar(arquivoSaida);
             }
         }
     }
@@ -316,6 +317,7 @@ public class ChipeitorTabajara{
             linha = buffer.readLine().split(" ");
             n = Integer.valueOf(linha[0]);
             nConexoes = Integer.valueOf(linha[1]);
+            arquivoSaida = nomeArquivo + "_currentState";
             
             placa = new int[n][n];
             conexoes = new ArrayList<Tupla>();
