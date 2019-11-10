@@ -149,7 +149,6 @@ public class ChipeitorTabajara{
                 if ((n % 2) != 0) limite = n;
                 else limite = n - 1;
 
-                //System.out.println(); Imprimir(); System.out.println();
                 tmp = new int[limite];
                 for (i = 0; i < limite; i++)
                     tmp[i] = aux[i][i];
@@ -160,14 +159,12 @@ public class ChipeitorTabajara{
                     aux[i][i] = tmp[j];
                     j--;
                 }
-                //Imprimir(); System.out.println();
                 break;
 
             default:
                 if ((n % 2) != 0) limite = n;
                 else limite = n - 1;
 
-                //System.out.println(); Imprimir(); System.out.println();
                 tmp = new int[limite];
                 j = limite - 1;
                 for (i = 0; i < limite; i++){
@@ -176,13 +173,12 @@ public class ChipeitorTabajara{
                     j--;
                 }
 
-                /*j = limite - 1;
+                j = limite - 1;
                 for (i = 0; i < limite; i++){
 
-                    aux[i][i] = tmp[j];
+                    aux[i][j] = tmp[j];
                     j--;
-                }*/
-                //Imprimir(); System.out.println();
+                }
         }
 
         return aux;
