@@ -61,12 +61,12 @@ public class ChipeitorTabajara{
     
     private static int[][] ModificarPlaca(int[][] aux){
 
-        int a, b, c, op;
+        int a, b, c, op, opDiagonal;
         Tupla t1, t2, t3;
         Random r;
 
         r = new Random();
-        op = r.nextInt(6);
+        op = r.nextInt(7);
         
         switch(op){
             
@@ -124,10 +124,67 @@ public class ChipeitorTabajara{
                 aux = FlipVertical(aux);
                 break;
 
+            case 6:
+                opDiagonal = r.nextInt(2);
+                aux = InverterDiagonal(aux, opDiagonal);
+                break;
+
             default:
                 System.out.println("NOP");
         }
         
+        return aux;
+    }
+
+    // -------------------------------------------------------------------------------- //
+
+    private static int[][] InverterDiagonal(int[][] aux, int op){
+
+        int i, j, limite;
+        int[] tmp;
+
+        switch(op){
+
+            case 0:
+                if ((n % 2) != 0) limite = n;
+                else limite = n - 1;
+
+                //System.out.println(); Imprimir(); System.out.println();
+                tmp = new int[limite];
+                for (i = 0; i < limite; i++)
+                    tmp[i] = aux[i][i];
+
+                j = limite - 1;
+                for (i = 0; i < limite; i++){
+
+                    aux[i][i] = tmp[j];
+                    j--;
+                }
+                //Imprimir(); System.out.println();
+                break;
+
+            default:
+                if ((n % 2) != 0) limite = n;
+                else limite = n - 1;
+
+                //System.out.println(); Imprimir(); System.out.println();
+                tmp = new int[limite];
+                j = limite - 1;
+                for (i = 0; i < limite; i++){
+
+                    tmp[i] = aux[i][j];
+                    j--;
+                }
+
+                /*j = limite - 1;
+                for (i = 0; i < limite; i++){
+
+                    aux[i][i] = tmp[j];
+                    j--;
+                }*/
+                //Imprimir(); System.out.println();
+        }
+
         return aux;
     }
 
@@ -317,7 +374,7 @@ public class ChipeitorTabajara{
             linha = buffer.readLine().split(" ");
             n = Integer.valueOf(linha[0]);
             nConexoes = Integer.valueOf(linha[1]);
-            arquivoSaida = nomeArquivo + "_currentState";
+            arquivoSaida = nomeArquivo.replaceAll("_currentState", "") + "_currentState";
             
             placa = new int[n][n];
             conexoes = new ArrayList<Tupla>();
